@@ -144,8 +144,4 @@ public class Arrays {
 
         return true;
     }
-
-    public static void main(String[] args) {
-        Arrays arrays = new Arrays();
-    }
 }
