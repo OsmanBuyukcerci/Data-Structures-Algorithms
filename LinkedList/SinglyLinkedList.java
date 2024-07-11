@@ -215,6 +215,7 @@ public class SinglyLinkedList {
             mainPtr = mainPtr.next;
         }
         return mainPtr;
+
     }
 
     // public void removeDuplicatesFromSortedList() {
@@ -359,28 +360,74 @@ public class SinglyLinkedList {
         }
     }
 
-    public ListNode mergeTwoSortedList(ListNode head1, ListNode head2) {
+    public ListNode merge(ListNode a, ListNode b) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
 
+        while (a != null && b != null) {
+            if (a.data <= b.data) {
+                tail.next = a;
+                a = a.next;
+            } else {
+                tail.next = b;
+                b = b.next;
+            }
+            tail = tail.next;
+        }
+
+        if (a == null)
+            tail.next = b;
+        else
+            tail.next = a;
+
+        return dummy.next;
+    }
+
+    public ListNode add(ListNode a, ListNode b) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+
+        int carry = 0;
+
+        while (a != null || b != null) {
+            int x = (a != null) ? a.data : 0;
+            int y = (b != null) ? b.data : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            tail.next = new ListNode(sum % 10);
+            tail = tail.next;
+
+            if (a != null)
+                a = a.next;
+            if (b != null)
+                b = b.next;
+        }
+
+        if (carry > 0)
+            tail.next = new ListNode(carry);
+
+        return dummy.next;
     }
 
     public static void main(String[] args) {
 
         SinglyLinkedList sll = new SinglyLinkedList();
-        sll.head = new ListNode(1);
-        ListNode second = new ListNode(1);
-        ListNode third = new ListNode(2);
-        ListNode fourth = new ListNode(3);
-        ListNode fifth = new ListNode(3);
-        ListNode sixth = new ListNode(4);
+        sll.head = new ListNode(5);
+        ListNode second = new ListNode(6);
+        ListNode third = new ListNode(7);
 
         sll.head.next = second; // 1 --> 1
         second.next = third; // 1 --> 1 --> 2
-        third.next = fourth; // 1 --> 1 --> 2 --> 3
-        fourth.next = fifth; // 1 --> 1 --> 2 --> 3
-        fifth.next = sixth; // 1 --> 1 --> 2 --> 3 --> 4
-        sixth.next = third; // 1 --> 1 --> 2 --> 3 --> 4 --> 2 ...Loop --> 3 --> 4 ...
 
-        sll.listWithoutLoop();
-        sll.printList();
+        SinglyLinkedList sll2 = new SinglyLinkedList();
+        sll2.head = new ListNode(3);
+        ListNode second2 = new ListNode(5);
+        ListNode third2 = new ListNode(0);
+
+        sll2.head.next = second2;
+        second2.next = third2;
+
+        int counter = sll.findLength();
+        System.out.println(counter);
     }
 }
