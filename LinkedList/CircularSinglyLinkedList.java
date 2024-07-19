@@ -56,12 +56,51 @@ public class CircularSinglyLinkedList {
         System.out.print(first.data + " "); // Prints last node
     }
 
+    public void insertFirst(int data) {
+        ListNode newNode = new ListNode(data);
+        if (last == null)
+            last = newNode;
+        else
+            newNode.next = last.next;
+
+        last.next = newNode;
+        length++;
+    }
+
+    public void insertLast(int data) {
+        ListNode newNode = new ListNode(data);
+
+        if (last == null) {
+            last = newNode;
+            last.next = last;
+        } else {
+            newNode.next = last.next;
+            last.next = newNode;
+            last = newNode;
+        }
+        length++;
+    }
+
+    public ListNode removeFirst() {
+        ListNode first = last.next;
+        if (last == null)
+            return null;
+        else
+            last.next = first.next;
+        first.next = null;
+        length--;
+        return first;
+    }
+
     public static void main(String[] args) {
 
         CircularSinglyLinkedList csll = new CircularSinglyLinkedList();
-        csll.createCircularLinkedList();
+        csll.insertLast(1);
+        csll.insertLast(2);
+        csll.insertLast(3);
+        csll.insertLast(4);
+        csll.insertLast(5);
         csll.display();
-
     }
 
 }
